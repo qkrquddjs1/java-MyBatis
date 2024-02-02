@@ -1,34 +1,38 @@
-package com.ohgiraffers.section01.xmlconfig;
+package com.ohgiraffers.section02.javaconfig;
+
 
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
 
-import static com.ohgiraffers.section01.xmlconfig.Template.getSqlSession;
+import static com.ohgiraffers.section02.javaconfig.Template.getSqlSession;
 
 public class MenuService {
 
-    private final MenuDAO menuDAO;
-
-    public MenuService(){
-        menuDAO = new MenuDAO();
-    }
+    private MenuMapper menuMapper;
 
     public List<MenuDTO> selectAllMenu() {
+
         SqlSession sqlSession = getSqlSession();
 
-        List<MenuDTO> menuList = menuDAO.selecetAllMenu(sqlSession);
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        List<MenuDTO> menuList = menuMapper.selectAllMenu();
 
         sqlSession.close();
 
         return menuList;
+
+
 
     }
 
     public MenuDTO selectMenuByMenuCode(int menuCode) {
         SqlSession sqlSession = getSqlSession();
 
-        MenuDTO menu = menuDAO.selectMenuByMenuCode(sqlSession, menuCode);
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        MenuDTO menu = menuMapper.selectMenuByMenCode(menuCode);
 
         sqlSession.close();
 
@@ -38,9 +42,10 @@ public class MenuService {
     public boolean regisMenu(MenuDTO menu) {
         SqlSession sqlSession = getSqlSession();
 
-        int result = menuDAO.insertMenu(sqlSession, menu);
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+        int result = menuMapper.insertMenu(menu);
 
-        if(result > 0) {
+        if (result > 0) {
             sqlSession.commit();
         } else {
             sqlSession.rollback();
@@ -49,15 +54,15 @@ public class MenuService {
         sqlSession.close();
 
         return result > 0;
-
     }
 
     public boolean modifyMenu(MenuDTO menu) {
         SqlSession sqlSession = getSqlSession();
 
-        int result = menuDAO.uqdateMenu(sqlSession, menu);
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+        int result = menuMapper.updateMenu(menu);
 
-        if(result > 0) {
+        if (result > 0) {
             sqlSession.commit();
         } else {
             sqlSession.rollback();
@@ -71,9 +76,10 @@ public class MenuService {
     public boolean deleteMenu(int menuCode) {
         SqlSession sqlSession = getSqlSession();
 
-        int result = menuDAO.deleteMenu(sqlSession, menuCode);
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+        int result = menuMapper.deleteMenu(menuCode);
 
-        if(result > 0) {
+        if (result > 0) {
             sqlSession.commit();
         } else {
             sqlSession.rollback();

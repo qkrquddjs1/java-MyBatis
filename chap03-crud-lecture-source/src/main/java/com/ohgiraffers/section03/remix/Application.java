@@ -1,4 +1,4 @@
-package com.ohgiraffers.section01.xmlconfig;
+package com.ohgiraffers.section03.remix;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,15 +22,15 @@ public class Application {
             int no = sc.nextInt();
 
             switch (no) {
-                case 1 :
+                case 1 :    /* 전제조회*/
                     menuController.selectAllMenu(); break;
-                case 2 :
+                case 2 :    /* 한줄조회*/
                     menuController.selectMenuByMenuCode(inputMenuCode()); break;
-                case 3 :
+                case 3 :    /* 메뉴 추가*/
                     menuController.registMenu(inputMenu()); break;
-                case 4 :
+                case 4 :    /* 메뉴 수정 */
                     menuController.modifyMenu(inputModifyMenu()); break;
-                case 5 :
+                case 5 :    /* 메뉴 삭제 */
                     menuController.deleteMenu(inputMenuCode()); break;
                 default:
                     System.out.println("잘못 된 메뉴 번호를 선택 하셧습니다. "); break;
